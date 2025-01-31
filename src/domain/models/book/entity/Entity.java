@@ -1,4 +1,6 @@
-package domain.models;
+package domain.models.book.entity;
+
+import domain.models.book.Book;
 
 import java.util.ArrayList;
 

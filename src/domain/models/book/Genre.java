@@ -1,4 +1,4 @@
-package domain.models;
+package domain.models.book;
 
 public enum Genre {
     // FICTION

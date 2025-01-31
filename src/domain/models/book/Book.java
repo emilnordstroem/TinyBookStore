@@ -1,4 +1,8 @@
-package domain.models;
+package domain.models.book;
+
+import domain.models.book.entity.Author;
+import domain.models.book.entity.Publisher;
+import domain.models.customer.Rating;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

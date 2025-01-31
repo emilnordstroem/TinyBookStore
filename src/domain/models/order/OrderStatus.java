@@ -1,4 +1,4 @@
-package domain.models;
+package domain.models.order;
 
 public enum OrderStatus {
 }

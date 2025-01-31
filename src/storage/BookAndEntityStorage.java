@@ -1,8 +1,8 @@
 package storage;
 
-import domain.models.Author;
-import domain.models.Book;
-import domain.models.Publisher;
+import domain.models.book.entity.Author;
+import domain.models.book.Book;
+import domain.models.book.entity.Publisher;
 
 import java.util.ArrayList;
 

@@ -1,26 +1,25 @@
-package domain.models;
+package domain.models.book.entity;
 
 import storage.IdentificationStorage;
-
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Publisher extends Entity{
+public class Author extends Entity {
     private String firstName;
     private String lastName;
 
-    public Publisher(String firstName, String lastName) {
-        super(Publisher.generateID(), new ArrayList<>());
+    public Author(String firstName, String lastName) {
+        super(Author.generateID(), new ArrayList<>());
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
     private static String generateID(){
         String id = String.valueOf(new Random().nextInt(111_111_111, 999_999_999));
-        if(IdentificationStorage.getPublishersIDs().contains(id)){
+        if(IdentificationStorage.getAuthorsIDs().contains(id)){
             generateID();
         }
-        IdentificationStorage.addPublisherID(id);
+        IdentificationStorage.addAuthorID(id);
         return id;
     }
 

@@ -1,5 +1,6 @@
-package domain.models;
+package domain.models.customer;
 
+import domain.models.book.Book;
 import storage.IdentificationStorage;
 
 import java.util.Random;

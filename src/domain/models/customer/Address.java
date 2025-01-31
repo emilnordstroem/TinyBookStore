@@ -1,4 +1,4 @@
-package domain.models;
+package domain.models.customer;
 
 public class Address {
     private String streetName;
