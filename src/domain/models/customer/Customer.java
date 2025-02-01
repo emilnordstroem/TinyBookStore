@@ -2,7 +2,8 @@ package domain.models.customer;
 
 import domain.models.book.Book;
 import domain.models.order.Order;
-import storage.IdentificationStorage;
+import storage.Storage;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -28,12 +29,21 @@ public class Customer {
     }
 
     private long generateID(){
-        long id = new Random().nextLong(111_111_111, 999_999_999);
-        if(IdentificationStorage.getCustomersIDs().contains(id)){
+        long id = new Random().nextLong(100_000_000,888_888_888);
+        if(idAreadyUsed(id)){
             generateID();
         }
-        IdentificationStorage.addCustomerID(id);
         return id;
+    }
+
+    private boolean idAreadyUsed(long id){
+        ArrayList<Customer> customers = Storage.getCustomers();
+        for(Customer customer : customers){
+            if(customer.getId() == id){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void createRating(Book book, double rating){

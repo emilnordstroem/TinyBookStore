@@ -1,8 +1,9 @@
 package domain.models.customer;
 
 import domain.models.book.Book;
-import storage.IdentificationStorage;
+import storage.Storage;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Rating {
@@ -20,11 +21,20 @@ public class Rating {
 
     private String generateID(){
         String id = String.valueOf(new Random().nextInt(100_000_000,888_888_888));
-        if(IdentificationStorage.getRatingIDs().contains(id)){
+        if(idAreadyUsed(id)){
             generateID();
         }
-        IdentificationStorage.addRatingID(id);
         return id;
+    }
+
+    private boolean idAreadyUsed(String id){
+        ArrayList<Rating> ratings = Storage.getRatings();
+        for(Rating rating : ratings){
+            if(rating.getId().equals(id)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void addRatingToBook(){
