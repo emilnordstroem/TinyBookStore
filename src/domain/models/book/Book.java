@@ -1,7 +1,7 @@
 package domain.models.book;
 
-import domain.models.book.entity.Author;
-import domain.models.book.entity.Publisher;
+import domain.models.book.bookEntities.Author;
+import domain.models.book.bookEntities.Publisher;
 import domain.models.customer.Rating;
 
 import java.time.LocalDate;
@@ -31,7 +31,7 @@ public class Book {
         this.ratingLevel = null;
     }
 
-    protected void addRating(Rating rating){
+    public void addRating(Rating rating){
         if(!ratings.contains(rating)){
             ratings.add(rating);
             evaluteBookRating();
@@ -58,7 +58,7 @@ public class Book {
         }
     }
 
-    protected void removeRating(Rating rating){
+    public void removeRating(Rating rating){
         ratings.remove(rating);
     }
 
