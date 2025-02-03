@@ -1,19 +1,13 @@
 package domain.models.book.bookEntities;
 
 public class Publisher extends Entity {
-    private String firstName;
-    private String lastName;
+    private String name;
 
-    public Publisher(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Publisher(String name) {
+        this.name = name;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
+    public String getName() {
+        return name;
     }
 }

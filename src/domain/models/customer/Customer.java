@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Customer {
-    private long id;
+    private static long id = 100_000_001;
     private String firstName;
     private String lastName;
     private String phoneNo;
@@ -18,7 +18,7 @@ public class Customer {
     private ArrayList<Rating> bookRatings;
 
     public Customer(String firstName, String lastName, String phoneNo, String email, Address address) {
-        this.id = generateID();
+        id += 1;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNo = phoneNo;
@@ -26,24 +26,6 @@ public class Customer {
         this.orders = new ArrayList<>();
         this.addresses.add(address);
         this.bookRatings = new ArrayList<>();
-    }
-
-    private long generateID(){
-        long id = new Random().nextLong(100_000_000,888_888_888);
-        if(idAreadyUsed(id)){
-            generateID();
-        }
-        return id;
-    }
-
-    private boolean idAreadyUsed(long id){
-        ArrayList<Customer> customers = Storage.getCustomers();
-        for(Customer customer : customers){
-            if(customer.getId() == id){
-                return true;
-            }
-        }
-        return false;
     }
 
     public void createRating(Book book, double rating){

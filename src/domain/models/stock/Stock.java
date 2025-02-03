@@ -11,20 +11,24 @@ public class Stock {
     private int quantity;
     private ArrayList<OrderList> orderLists;
 
-    public Stock(Book book, StockStatus status, int quantity) {
+    public Stock(Book book, int quantity) {
         this.book = book;
         this.status = calculateStockStatus();
         this.quantity = quantity;
     }
 
     private StockStatus calculateStockStatus() {
-        if(quantity > 0 && quantity <= 5){
+        if(quantity > 0 && quantity <= 10){
             return StockStatus.LOW;
-        } else if (quantity > 5) {
+        } else if (quantity > 10) {
             return StockStatus.HIGH;
         } else {
             return StockStatus.UNAVAILABLE;
         }
+    }
+
+    public void updateStock(){
+
     }
 
     public Book getBook() {

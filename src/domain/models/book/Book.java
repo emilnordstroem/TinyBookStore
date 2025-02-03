@@ -28,7 +28,7 @@ public class Book {
         this.publishmentDate = publishmentDate;
         this.price = price;
         this.ratings = new ArrayList<>();
-        this.ratingLevel = null;
+        this.ratingLevel = RatingLevel.MID;
     }
 
     public void addRating(Rating rating){
