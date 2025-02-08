@@ -11,10 +11,10 @@ import java.util.ArrayList;
 
 public class Customer extends User {
     private static Long id = 100_000L;
-    private String firstName;
-    private String lastName;
+    private final String firstName;
+    private final String lastName;
     private final LocalDate dateOfBirth;
-    private String mobileNo;
+    private final String mobileNo;
     private Cart cart = new Cart();
     private final ArrayList<Order> orders = new ArrayList<>();
     private final ArrayList<Rating> bookRatings;

@@ -15,7 +15,7 @@ public class Cart {
     public double calculatePrice(){
         double totalPrice = 0;
         for(CartItem item : items){
-            totalPrice += item.getPrice();
+            totalPrice += (item.getQuantity() * item.getPrice());
         }
         return totalPrice;
     }
@@ -30,7 +30,7 @@ public class Cart {
             }
         }
         if(!bookExisted){
-            items.add(new CartItem(book, quality, book.getprice()));
+            items.add(new CartItem(book, quality));
         }
     }
 

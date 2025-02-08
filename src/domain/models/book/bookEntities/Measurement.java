@@ -1,11 +1,11 @@
 package domain.models.book.bookEntities;
 
 public class Measurement {
-    private int height;
-    private int width;
-    private int weight;
+    private final double height;
+    private final double width;
+    private final double weight;
 
-    public Measurement(int height, int width, int weight) {
+    public Measurement(double height, double width, double weight) {
         this.height = height;
         this.width = width;
         this.weight = weight;
@@ -15,27 +15,16 @@ public class Measurement {
         return height * weight;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
 }

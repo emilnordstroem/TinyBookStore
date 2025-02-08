@@ -7,10 +7,10 @@ public class CartItem {
     private int quantity;
     private double price;
 
-    public CartItem(Book book, int quantity, double price) {
+    public CartItem(Book book, int quantity) {
         this.book = book;
         this.quantity = quantity;
-        this.price = price;
+        setPrice(book.getprice());
     }
 
     public Book getBook() {

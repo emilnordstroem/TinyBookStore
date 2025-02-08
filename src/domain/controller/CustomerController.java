@@ -1,7 +1,9 @@
 package domain.controller;
 
 import domain.models.address.Address;
+import domain.models.book.Book;
 import domain.models.customer.Customer;
+import domain.models.order.Order;
 import storage.CustomerStorage;
 
 import java.time.LocalDate;
@@ -16,7 +18,20 @@ public class CustomerController {
         return newCustomer;
     }
 
+    public static void createCustomerRating(Customer customer, Book book,
+                                              double ratingScore, String comment){
+        boolean bookHasBeenOrdered = false;
+        for(Order order : customer.getOrders()){
+            if(order.getOrderList().containsKey(book)){
+                bookHasBeenOrdered = true;
+                break;
+            }
+        }
+        if(bookHasBeenOrdered){
+            customer.createRating(book, ratingScore, comment);
+        }
+    }
+
     // Adding address directly in the Customer class
-    // Creating rating directly in the Customer class
     // Adding items to cart directly in the Customer class
 }
