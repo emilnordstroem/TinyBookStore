@@ -2,7 +2,9 @@ package domain.models.customer;
 
 import domain.models.address.Address;
 import domain.models.book.Book;
+import domain.models.cart.Cart;
 import domain.models.order.Order;
+import storage.RatingStorage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,8 +13,9 @@ public class Customer extends User {
     private static Long id = 100_000L;
     private String firstName;
     private String lastName;
-    private LocalDate dateOfBirth;
+    private final LocalDate dateOfBirth;
     private String mobileNo;
+    private Cart cart = new Cart();
     private final ArrayList<Order> orders = new ArrayList<>();
     private final ArrayList<Rating> bookRatings;
     private final ArrayList<Address> addresses = new ArrayList<>();
@@ -43,16 +46,28 @@ public class Customer extends User {
         }
     }
 
-    public void createRating(Book book, char ratingScore, String comment){
+    public void createRating(Book book, double ratingScore, String comment){
         Rating newRating = new Rating(this, book, ratingScore, comment);
-
+        RatingStorage.addRating(newRating);
         addRating(newRating);
     }
 
-    public void addRating(Rating rating){
+    private void addRating(Rating rating){
         if(!bookRatings.contains(rating)){
             bookRatings.add(rating);
         }
+    }
+
+    private void removeRating(Rating rating){
+        bookRatings.remove(rating);
+    }
+
+    private void removeAddress(Address address){
+        addresses.remove(address);
+    }
+
+    public void addItemToCart(Book book, int quantity){
+        this.cart.addItem(book, quantity);
     }
 
     public String getFirstName() {
@@ -69,6 +84,14 @@ public class Customer extends User {
 
     public String getMobileNo() {
         return mobileNo;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void defaultCart(){
+        this.cart = new Cart();
     }
 
     public ArrayList<Order> getOrders() {

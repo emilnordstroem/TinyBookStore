@@ -4,16 +4,21 @@ import domain.models.book.Book;
 
 public class Rating {
     private static Long id = 100_000_000L;
-    private Customer customer;
-    private Book book;
-    private double rating;
-    private String comment;
+    private final Customer customer;
+    private final Book book;
+    private final double rating;
+    private final String comment;
 
     public Rating(Customer customer, Book book, double rating, String comment) {
         this.customer = customer;
         this.book = book;
         this.rating = rating;
         this.comment = comment;
+        addRatingToBook();
+    }
+
+    private void addRatingToBook(){
+        book.addRating(this);
     }
 
     public static Long getId() {

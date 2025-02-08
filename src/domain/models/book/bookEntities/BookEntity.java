@@ -12,6 +12,7 @@ public abstract class BookEntity {
     public BookEntity(String email) {
         id += 1;
         this.email = email;
+        this.books = new ArrayList<>();
     }
 
     abstract void addBook(Book book);

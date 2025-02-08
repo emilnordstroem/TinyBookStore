@@ -6,7 +6,7 @@ import domain.models.book.Book;
 import java.util.ArrayList;
 
 public class Publisher extends BookEntity{
-    private String title;
+    private final String title;
     private Address address;
 
     public Publisher(String email, String title, Address address) {
@@ -22,19 +22,19 @@ public class Publisher extends BookEntity{
     }
 
     @Override
-    void addBook(Book book) {
+    public void addBook(Book book) {
         if(!books.contains(book)){
             books.add(book);
         }
     }
 
     @Override
-    void removeBook(Book book) {
+    public void removeBook(Book book) {
         books.remove(book);
     }
 
     @Override
-    ArrayList<Book> getBooks() {
+    public ArrayList<Book> getBooks() {
         return new ArrayList<>(books);
     }
 }

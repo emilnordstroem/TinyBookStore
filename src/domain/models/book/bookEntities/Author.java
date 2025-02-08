@@ -23,19 +23,19 @@ public class Author extends BookEntity{
     }
 
     @Override
-    void addBook(Book book) {
+    public void addBook(Book book) {
         if(!books.contains(book)){
             books.add(book);
         }
     }
 
     @Override
-    void removeBook(Book book) {
+    public void removeBook(Book book) {
         books.remove(book);
     }
 
     @Override
-    ArrayList<Book> getBooks() {
+    public ArrayList<Book> getBooks() {
         return new ArrayList<>(books);
     }
 }

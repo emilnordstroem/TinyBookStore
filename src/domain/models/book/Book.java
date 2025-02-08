@@ -1,5 +1,6 @@
 package domain.models.book;
 
+import domain.models.book.bookEntities.Author;
 import domain.models.book.bookEntities.BookEntity;
 import domain.models.book.bookEntities.Measurement;
 import domain.models.book.bookEntities.Publisher;
@@ -18,7 +19,7 @@ public class Book implements Rateable, Purchasable, Searchable {
     private Year publicationsYear;
     private String pages;
     private Measurement measurement;
-    private ArrayList<BookEntity> bookEntities;
+    private ArrayList<BookEntity> bookEntities = new ArrayList<>();
     private ArrayList<Rating> ratings = new ArrayList<>();
     private Boolean isRecommended;
     private double price;
@@ -32,18 +33,28 @@ public class Book implements Rateable, Purchasable, Searchable {
         this.publicationsYear = publicationsYear;
         this.pages = pages;
         this.measurement = measurement;
-        this.bookEntities = bookEntities;
+        addBookEntity(bookEntities);
         this.isRecommended = false; // New books will not be placed as recommended
         this.price = price;
     }
 
-    public void addBookEntity(BookEntity newEntity) {
-        if(!bookEntities.contains(newEntity)){
-            for(BookEntity entity : bookEntities){
-                if(entity instanceof Publisher){
-                    bookEntities.remove(entity);
-                }
-                bookEntities.add(newEntity);
+    public void addBookEntity(ArrayList<BookEntity> entities) {
+        for(BookEntity entity : entities){
+            bookEntities.add(entity);
+            if(entity instanceof Publisher){
+                ((Publisher) entity).addBook(this);
+            } else if (entity instanceof Author){
+                ((Author) entity).addBook(this);
+            }
+        }
+    }
+
+    public void removeBookFromEntities(){
+        for(BookEntity entity : bookEntities){
+            if(entity instanceof Author){
+                ((Author) entity).removeBook(this);
+            } else if (entity instanceof Publisher){
+                ((Publisher) entity).removeBook(this);
             }
         }
     }
@@ -55,11 +66,18 @@ public class Book implements Rateable, Purchasable, Searchable {
 
     @Override
     public void addRating(Rating rating) {
-
+        if(!ratings.contains(rating)){
+            ratings.add(rating);
+        }
     }
 
     @Override
     public Rating getRating(Rating rating) {
+        for(Rating bookRating : ratings){
+            if(bookRating.equals(rating)){
+                return rating;
+            }
+        }
         return null;
     }
 
@@ -81,5 +99,9 @@ public class Book implements Rateable, Purchasable, Searchable {
         if(averageRating > 8.5){
             isRecommended = true;
         }
+    }
+
+    public ArrayList<BookEntity> getBookEntities() {
+        return new ArrayList<>(bookEntities);
     }
 }
