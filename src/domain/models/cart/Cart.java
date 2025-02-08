@@ -37,4 +37,8 @@ public class Cart {
     public void removeItem(CartItem item){
         items.remove(item);
     }
+
+    public ArrayList<CartItem> getItems() {
+        return items;
+    }
 }

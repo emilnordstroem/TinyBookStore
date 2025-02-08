@@ -1,26 +1,44 @@
 package domain.models.inventory;
 
 import domain.models.book.Book;
+import storage.StockStorage;
 
 public class Stock implements StockManageable{
     private int quantity;
-    private Book book;
+    private final Book book;
     private boolean isAvailable;
 
     public Stock(int quantity, Book book) {
-        this.quantity = updateStock(quantity);
+        updateStock(quantity);
         this.book = book;
-        this.isAvailable = updateAvailability();
-    }
-
-    @Override
-    public int updateStock(int quantity) {
-        this.quantity += quantity;
         updateAvailability();
     }
 
     @Override
-    public boolean updateAvailability() {
+    public void updateStock(int quantity) {
+        this.quantity += quantity;
+        updateAvailability();
+        StockStorage.updateStockArrayList(this);
+    }
+
+    @Override
+    public void updateAvailability() {
         isAvailable = quantity > 0;
+    }
+
+    public int getAvailableQuantity(int change){
+        return Math.max(0, quantity - change);
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
     }
 }

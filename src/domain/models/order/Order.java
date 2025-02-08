@@ -1,23 +1,28 @@
 package domain.models.order;
 
+import domain.models.book.Book;
 import domain.models.cart.Cart;
+import domain.models.cart.CartItem;
 import domain.models.customer.Customer;
+import domain.models.inventory.Stock;
+import storage.StockStorage;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 public class Order implements OrderProcessable {
     private static long id = 100_001L;
-    private LocalDate placementDate;
+    private final LocalDate placementDate;
     private Customer customer;
-    private Cart orderList;
+    private final HashMap<Book, Integer> orderList = new HashMap<>();
     private OrderStatus status;
 
-    public Order(Customer customer, Cart orderList) {
+    public Order(Customer customer, Cart cart) {
         id += 1;
         this.placementDate = LocalDate.now();
         setCustomer(customer);
-        this.orderList = orderList;
-        this.status = OrderStatus.PLACED;
+        convertCartToOrderList(cart);
+        updateOrder(OrderStatus.PLACED);
     }
 
     private void setCustomer(Customer customer) {
@@ -26,8 +31,38 @@ public class Order implements OrderProcessable {
     }
 
     @Override
+    public void convertCartToOrderList(Cart cart){
+        for(CartItem item : cart.getItems()){
+            Book book = item.getBook();
+            int availableQuanitity = availableQuantity(book, item.getQuantity());
+            if(availableQuanitity > 0){
+                orderList.put(book, availableQuanitity);
+            }
+        }
+    }
+
+    @Override
+    public int availableQuantity(Book book, int quantity){
+        int orderableQuantity = 0;
+        for(Stock stock : StockStorage.getStockArrayList()){
+            if(stock.getBook().equals(book) && stock.isAvailable()){
+                orderableQuantity = stock.getAvailableQuantity(quantity);
+                if(orderableQuantity > 0){
+                    stock.updateStock(orderableQuantity);
+                }
+                break;
+            }
+        }
+        return orderableQuantity;
+    }
+
+    @Override
     public double getOrderPrice() {
-        return orderList.calculatePrice();
+        double orderPrice = 0;
+        for(Book book : orderList.keySet()){
+            orderPrice += (book.getprice() * orderList.get(book));
+        }
+        return orderPrice;
     }
 
     @Override
@@ -77,7 +112,7 @@ public class Order implements OrderProcessable {
         return customer;
     }
 
-    public Cart getOrderList() {
+    public HashMap<Book, Integer> getOrderList() {
         return orderList;
     }
 
