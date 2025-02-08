@@ -9,6 +9,7 @@ import storage.StockStorage;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Order implements OrderProcessable {
     private static long id = 100_001L;
@@ -22,7 +23,7 @@ public class Order implements OrderProcessable {
         this.placementDate = LocalDate.now();
         setCustomer(customer);
         convertCartToOrderList(cart);
-        updateOrder(OrderStatus.PLACED);
+        this.status = OrderStatus.PLACED;
     }
 
     private void setCustomer(Customer customer) {
@@ -34,9 +35,8 @@ public class Order implements OrderProcessable {
     public void convertCartToOrderList(Cart cart){
         for(CartItem item : cart.getItems()){
             Book book = item.getBook();
-            int availableQuanitity = availableQuantity(book, item.getQuantity());
-            if(availableQuanitity > 0){
-                orderList.put(book, availableQuanitity);
+            if(availableQuantity(book, item.getQuantity()) > 0){
+                orderList.put(book, item.getQuantity());
             }
         }
     }
@@ -46,7 +46,7 @@ public class Order implements OrderProcessable {
         int orderableQuantity = 0;
         for(Stock stock : StockStorage.getStockArrayList()){
             if(stock.getBook().equals(book) && stock.isAvailable()){
-                orderableQuantity = stock.getAvailableQuantity(quantity);
+                orderableQuantity = Math.min(quantity, stock.getQuantity());
                 if(orderableQuantity > 0){
                     stock.updateStock(orderableQuantity);
                 }
@@ -59,8 +59,8 @@ public class Order implements OrderProcessable {
     @Override
     public double getOrderPrice() {
         double orderPrice = 0;
-        for(Book book : orderList.keySet()){
-            orderPrice += (book.getprice() * orderList.get(book));
+        for(Map.Entry<Book, Integer> book : orderList.entrySet()){
+            orderPrice += (book.getKey().getprice() * book.getValue());
         }
         return orderPrice;
     }
@@ -68,30 +68,32 @@ public class Order implements OrderProcessable {
     @Override
     public void updateOrder(OrderStatus status) {
         OrderStatus currentStatus = this.status;
-        switch (status) {
-            case CANCELLED:
-                if (currentStatus.equals(OrderStatus.PLACED)) {
-                    this.status = OrderStatus.CANCELLED;
-                }
-                break;
-            case PACKED:
-                if (currentStatus.equals(OrderStatus.PLACED)) {
-                    this.status = OrderStatus.PACKED;
-                }
-                break;
-            case INTRANSIT:
-                if (currentStatus.equals(OrderStatus.PACKED)) {
-                    this.status = OrderStatus.INTRANSIT;
-                }
-            case DELIVERED:
-                if (currentStatus.equals(OrderStatus.INTRANSIT)) {
-                    this.status = OrderStatus.DELIVERED;
-                }
-            case RETURNED:
-                if (currentStatus.equals(OrderStatus.DELIVERED)) {
-                    this.status = OrderStatus.RETURNED;
-                }
-                break;
+        if(!currentStatus.equals(OrderStatus.CANCELLED)){
+            switch (status) {
+                case CANCELLED:
+                    if (currentStatus.equals(OrderStatus.PLACED)) {
+                        this.status = OrderStatus.CANCELLED;
+                    }
+                    break;
+                case PACKED:
+                    if (currentStatus.equals(OrderStatus.PLACED)) {
+                        this.status = OrderStatus.PACKED;
+                    }
+                    break;
+                case INTRANSIT:
+                    if (currentStatus.equals(OrderStatus.PACKED)) {
+                        this.status = OrderStatus.INTRANSIT;
+                    }
+                case DELIVERED:
+                    if (currentStatus.equals(OrderStatus.INTRANSIT)) {
+                        this.status = OrderStatus.DELIVERED;
+                    }
+                case RETURNED:
+                    if (currentStatus.equals(OrderStatus.DELIVERED)) {
+                        this.status = OrderStatus.RETURNED;
+                    }
+                    break;
+            }
         }
     }
 

@@ -26,10 +26,6 @@ public class Stock implements StockManageable{
         isAvailable = quantity > 0;
     }
 
-    public int getAvailableQuantity(int change){
-        return Math.max(0, quantity - change);
-    }
-
     public int getQuantity() {
         return quantity;
     }

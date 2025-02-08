@@ -58,7 +58,7 @@ public class Customer extends User {
         }
     }
 
-    private void removeRating(Rating rating){
+    public void removeRating(Rating rating){
         bookRatings.remove(rating);
     }
 
