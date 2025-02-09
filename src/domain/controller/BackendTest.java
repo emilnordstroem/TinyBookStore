@@ -41,8 +41,6 @@ public class BackendTest {
         Book testBook = BookController.createBook(
                 "1234_12345_123456", "Test Book", BookType.EBOOK,
                 Year.now(), "360", bookMeasurement, bookEntities, 249);
-
-        CustomerController.createCustomerRating(testCustomer, testBook, 8.5, "Testing is great");
         //===========================================================
     // Second backend test -> passed
         InventoryController.createStock(testBook, 100);
@@ -75,5 +73,13 @@ public class BackendTest {
         //===========================================================
     // Fourth backend text -> not passed
         // About removing data
+        CustomerController.createCustomerRating(testCustomer, testBook, 8.5, "Testing is great");
+        Rating rating = testCustomer.getBookRatings().getFirst();
+        testCustomer.removeRating(rating);
+        if(testCustomer.getBookRatings().isEmpty()){
+            System.out.println("No book ratings");
+        }
+
+
     }
 }

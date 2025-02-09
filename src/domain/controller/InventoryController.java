@@ -10,6 +10,4 @@ public class InventoryController {
         StockStorage.addStock(newStock);
         return newStock;
     }
-
-
 }
