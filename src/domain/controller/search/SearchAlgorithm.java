@@ -20,6 +20,7 @@ public class SearchAlgorithm<T extends Searchable<String>>{
         dynamicSearch();
     }
 
+    // Issue the two: Author and Publisher isn't correct (should return all bookes associated with author)
     private void dynamicSearch() {
         if(searchType.equals(SearchType.BOOK)){
             searchAlgorithm((ArrayList<T>) BookStorage.getBookArrayList());
