@@ -2,6 +2,7 @@ package domain.models.book.bookEntities;
 
 import domain.models.address.Address;
 import domain.models.book.Book;
+import domain.models.book.interfaces.Searchable;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,10 @@ public class Publisher extends BookEntity{
         }
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     @Override
     public void addBook(Book book) {
         if(!books.contains(book)){
@@ -36,5 +41,10 @@ public class Publisher extends BookEntity{
     @Override
     public ArrayList<Book> getBooks() {
         return new ArrayList<>(books);
+    }
+
+    @Override
+    public int compareTo(String searchTerm) {
+        return title.compareTo(searchTerm);
     }
 }

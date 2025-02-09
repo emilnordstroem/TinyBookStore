@@ -1,6 +1,7 @@
 package domain.models.book.bookEntities;
 
 import domain.models.book.Book;
+import domain.models.book.interfaces.Searchable;
 
 import java.util.ArrayList;
 
@@ -37,5 +38,10 @@ public class Author extends BookEntity{
     @Override
     public ArrayList<Book> getBooks() {
         return new ArrayList<>(books);
+    }
+
+    @Override
+    public int compareTo(String searchTerm) {
+        return lastName.compareTo(searchTerm);
     }
 }

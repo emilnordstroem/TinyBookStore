@@ -33,7 +33,6 @@ public class BookEntityStorage {
     public static ArrayList<Publisher> getPublisherArrayList(){
         return new ArrayList<>(publisherArrayList);
     }
-
     public static ArrayList<Author> getAuthorArrayList(){
         return new ArrayList<>(authorArrayList);
     }

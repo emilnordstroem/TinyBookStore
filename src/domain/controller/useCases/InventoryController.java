@@ -1,4 +1,4 @@
-package domain.controller;
+package domain.controller.useCases;
 
 import domain.models.book.Book;
 import domain.models.inventory.Stock;

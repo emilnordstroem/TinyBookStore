@@ -1,4 +1,8 @@
 package domain.models.book.interfaces;
 
-public interface Searchable {
+import domain.models.book.Book;
+
+public interface Searchable <T> extends Comparable<T>{
+    @Override
+    int compareTo(T object);
 }

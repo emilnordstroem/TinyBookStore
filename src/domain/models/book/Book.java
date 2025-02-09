@@ -7,7 +7,7 @@ import domain.models.book.interfaces.Searchable;
 import domain.models.customer.Rating;
 import java.util.ArrayList;
 
-public class Book implements Rateable, Purchasable, Searchable {
+public class Book implements Rateable, Purchasable, Searchable<String> {
     private String isbn;
     private Description description;
     private Measurement measurement;
@@ -91,5 +91,14 @@ public class Book implements Rateable, Purchasable, Searchable {
 
     public ArrayList<BookEntity> getBookEntities() {
         return new ArrayList<>(bookEntities);
+    }
+
+    @Override
+    public int compareTo(String searchTerm) {
+        return description.getTitle().compareToIgnoreCase(searchTerm);
+    }
+
+    public Description getDescription() {
+        return description;
     }
 }

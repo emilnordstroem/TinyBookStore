@@ -1,9 +1,9 @@
 package domain.controller.backendTests;
 
-import domain.controller.BookController;
-import domain.controller.CustomerController;
-import domain.controller.InventoryController;
-import domain.controller.OrderController;
+import domain.controller.useCases.BookController;
+import domain.controller.useCases.CustomerController;
+import domain.controller.useCases.InventoryController;
+import domain.controller.useCases.OrderController;
 import domain.models.address.Apartment;
 import domain.models.book.Book;
 import domain.models.book.BookType;

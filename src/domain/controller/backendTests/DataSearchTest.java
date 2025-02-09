@@ -1,7 +1,8 @@
 package domain.controller.backendTests;
 
-import domain.controller.BookController;
-import domain.controller.CustomerController;
+import domain.controller.search.BookSearch;
+import domain.controller.useCases.BookController;
+import domain.controller.useCases.CustomerController;
 import domain.models.address.Address;
 import domain.models.address.Apartment;
 import domain.models.address.House;
@@ -70,5 +71,10 @@ public class DataSearchTest {
                 CustomerController.createCustomer("Ivy", "Brown", LocalDate.of(1994, 2, 28), "ivy@example.com", "7788990011", addresses.get(3), "password9"),
                 CustomerController.createCustomer("Jack", "Gray", LocalDate.of(1986, 4, 12), "jack@example.com", "8899001122", addresses.get(4), "password10")
         );
+        //==============================================================================================
+    // Dataset test 1 - passed
+        BookSearch bookSearch = new BookSearch("Penguin Books");
+        ArrayList<Book> searchResult = bookSearch.getSearchResult();
+        System.out.println(searchResult);
     }
 }

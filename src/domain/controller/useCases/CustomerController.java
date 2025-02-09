@@ -1,4 +1,4 @@
-package domain.controller;
+package domain.controller.useCases;
 
 import domain.models.address.Address;
 import domain.models.book.Book;

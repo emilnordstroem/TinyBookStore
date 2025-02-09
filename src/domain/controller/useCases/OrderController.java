@@ -1,4 +1,4 @@
-package domain.controller;
+package domain.controller.useCases;
 
 import domain.models.customer.Customer;
 import domain.models.order.Order;
