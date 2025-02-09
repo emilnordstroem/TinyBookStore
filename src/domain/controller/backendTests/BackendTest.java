@@ -1,15 +1,15 @@
-package domain.controller;
+package domain.controller.backendTests;
 
+import domain.controller.BookController;
+import domain.controller.CustomerController;
+import domain.controller.InventoryController;
+import domain.controller.OrderController;
 import domain.models.address.Apartment;
 import domain.models.book.Book;
 import domain.models.book.BookType;
-import domain.models.book.bookEntities.Author;
-import domain.models.book.bookEntities.BookEntity;
-import domain.models.book.bookEntities.Measurement;
-import domain.models.book.bookEntities.Publisher;
+import domain.models.book.bookEntities.*;
 import domain.models.customer.Customer;
 import domain.models.customer.Rating;
-import domain.models.inventory.Stock;
 import domain.models.order.Order;
 import domain.models.order.OrderStatus;
 
@@ -36,11 +36,12 @@ public class BackendTest {
         ArrayList<BookEntity> bookEntities = new ArrayList<>();
         bookEntities.add(testAuthor);
         bookEntities.add(testPublisher);
-        Measurement bookMeasurement = new Measurement(20.5, 11,200);
         //===========================================================
-        Book testBook = BookController.createBook(
-                "1234_12345_123456", "Test Book", BookType.EBOOK,
-                Year.now(), "360", bookMeasurement, bookEntities, 249);
+        Book testBook = BookController.createBook("1234_12345_123456",
+                new Description(BookType.EBOOK, "Test Book", Year.now(), "360"),
+                new Measurement(20.5, 11,200),
+                bookEntities,
+                249);
         //===========================================================
     // Second backend test -> passed
         InventoryController.createStock(testBook, 100);
@@ -71,15 +72,12 @@ public class BackendTest {
             System.out.println(counter + " " + testOrder.getStatus());
         }
         //===========================================================
-    // Fourth backend text -> not passed
-        // About removing data
+    // Fourth backend text -> passed
         CustomerController.createCustomerRating(testCustomer, testBook, 8.5, "Testing is great");
         Rating rating = testCustomer.getBookRatings().getFirst();
         testCustomer.removeRating(rating);
         if(testCustomer.getBookRatings().isEmpty()){
             System.out.println("No book ratings");
         }
-
-
     }
 }

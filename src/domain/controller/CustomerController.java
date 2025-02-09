@@ -13,7 +13,7 @@ public class CustomerController {
     public static Customer createCustomer(String firstName, String lastName, LocalDate dateOfBirth,
                                           String email, String mobileNo, Address address,
                                           String password){
-        Customer newCustomer = new Customer(firstName, lastName, dateOfBirth, email, mobileNo, address, password);
+        Customer newCustomer = new Customer(firstName, lastName, email, mobileNo, dateOfBirth, address, password);
         CustomerStorage.addCustomer(newCustomer);
         return newCustomer;
     }

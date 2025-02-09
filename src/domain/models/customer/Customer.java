@@ -10,40 +10,49 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Customer extends User {
-    private static Long id = 100_000L;
+    private static Long customerId = 100_000L;
     private final String firstName;
     private final String lastName;
+    private ContactInfo contacts;
     private final LocalDate dateOfBirth;
-    private final String mobileNo;
-    private Cart cart = new Cart();
+    private Cart cart;
     private final ArrayList<Order> orders = new ArrayList<>();
     private final ArrayList<Rating> bookRatings;
     private final ArrayList<Address> addresses = new ArrayList<>();
 
-    public Customer(String firstName, String lastName, LocalDate dateOfBirth,
-                    String email, String mobileNo, Address address,
+    public Customer(String firstName, String lastName, String email, String phoneNo, LocalDate dateOfBirth, Address address,
                     String password) {
-        super(email, password);
-        id += 1;
+        super(password);
+        customerId += 1;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.contacts = new ContactInfo(email, phoneNo);
         this.dateOfBirth = dateOfBirth;
-        this.mobileNo = mobileNo;
+        this.cart = new Cart();
         this.bookRatings = new ArrayList<>();
         addAddress(address);
     }
 
-    public void addAddress(Address address) {
-        if (!addresses.contains(address)
-                && addresses.size() < 5) {
-            addresses.add(address);
-        }
+    public void addItemToCart(Book book, int quantity){
+        this.cart.addItem(book, quantity);
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public ArrayList<Order> getOrders() {
+        return new ArrayList<>(orders);
     }
 
     public void addOrder(Order order){
         if(!orders.contains(order)){
             orders.add(order);
         }
+    }
+
+    public ArrayList<Rating> getBookRatings() {
+        return bookRatings;
     }
 
     public void createRating(Book book, double ratingScore, String comment){
@@ -62,47 +71,14 @@ public class Customer extends User {
         bookRatings.remove(rating);
     }
 
+    public void addAddress(Address address) {
+        if (!addresses.contains(address)
+                && addresses.size() < 5) {
+            addresses.add(address);
+        }
+    }
+
     private void removeAddress(Address address){
         addresses.remove(address);
-    }
-
-    public void addItemToCart(Book book, int quantity){
-        this.cart.addItem(book, quantity);
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public String getMobileNo() {
-        return mobileNo;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void defaultCart(){
-        this.cart = new Cart();
-    }
-
-    public ArrayList<Order> getOrders() {
-        return new ArrayList<>(orders);
-    }
-
-    public ArrayList<Rating> getBookRatings() {
-        return new ArrayList<>(bookRatings);
-    }
-
-    public ArrayList<Address> getAddresses() {
-        return new ArrayList<>(addresses);
     }
 }

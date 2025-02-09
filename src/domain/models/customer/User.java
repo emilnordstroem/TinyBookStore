@@ -1,11 +1,11 @@
 package domain.models.customer;
 
 public abstract class User {
-    protected String email;
+    protected static long userId = 100_001L;
     protected String password;
 
-    public User(String email, String password) {
-        this.email = email;
+    public User(String password) {
+        userId += 1;
         this.password = password;
     }
 }

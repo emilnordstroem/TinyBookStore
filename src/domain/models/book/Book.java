@@ -1,37 +1,25 @@
 package domain.models.book;
 
-import domain.models.book.bookEntities.Author;
-import domain.models.book.bookEntities.BookEntity;
-import domain.models.book.bookEntities.Measurement;
-import domain.models.book.bookEntities.Publisher;
+import domain.models.book.bookEntities.*;
 import domain.models.book.interfaces.Purchasable;
 import domain.models.book.interfaces.Rateable;
 import domain.models.book.interfaces.Searchable;
 import domain.models.customer.Rating;
-
-import java.time.Year;
 import java.util.ArrayList;
 
 public class Book implements Rateable, Purchasable, Searchable {
     private String isbn;
-    private String title;
-    private BookType bookType;
-    private Year publicationsYear;
-    private String pages;
+    private Description description;
     private Measurement measurement;
-    private ArrayList<BookEntity> bookEntities = new ArrayList<>();
-    private ArrayList<Rating> ratings = new ArrayList<>();
+    private final ArrayList<BookEntity> bookEntities = new ArrayList<>();
+    private final ArrayList<Rating> ratings = new ArrayList<>();
     private Boolean isRecommended;
     private double price;
 
-    public Book(String isbn, String title, BookType bookType,
-                Year publicationsYear, String pages, Measurement measurement,
-                ArrayList<BookEntity> bookEntities, double price) {
+    public Book(String isbn, Description description,
+                Measurement measurement, ArrayList<BookEntity> bookEntities, double price) {
         this.isbn = isbn;
-        this.title = title;
-        this.bookType = bookType;
-        this.publicationsYear = publicationsYear;
-        this.pages = pages;
+        this.description = description;
         this.measurement = measurement;
         addBookEntity(bookEntities);
         this.isRecommended = false; // New books will not be placed as recommended
