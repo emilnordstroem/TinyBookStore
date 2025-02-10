@@ -23,6 +23,12 @@ public class Author extends BookEntity{
         return lastName;
     }
 
+    public String getFullName(){
+        return String.format("%s %s",
+                firstName,
+                lastName);
+    }
+
     @Override
     public void addBook(Book book) {
         if(!books.contains(book)){
@@ -38,6 +44,13 @@ public class Author extends BookEntity{
     @Override
     public ArrayList<Book> getBooks() {
         return new ArrayList<>(books);
+    }
+
+    @Override
+    public boolean matches(String search) {
+        return firstName.toLowerCase().contains(search)
+                || lastName.toLowerCase().contains(search)
+                || getFullName().toLowerCase().contains(search);
     }
 
     @Override

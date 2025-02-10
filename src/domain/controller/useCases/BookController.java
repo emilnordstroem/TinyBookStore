@@ -21,9 +21,9 @@ public class BookController {
     }
 
     public static Book createBook(String isbn, Description description, Measurement measurement,
-                                  ArrayList<BookEntity> bookEntities, double price){
+                                  Author author, Publisher publisher, double price){
 
-        Book newBook = new Book(isbn, description, measurement, bookEntities, price);
+        Book newBook = new Book(isbn, description, measurement, author, publisher, price);
         BookStorage.addBook(newBook);
         return newBook;
     }

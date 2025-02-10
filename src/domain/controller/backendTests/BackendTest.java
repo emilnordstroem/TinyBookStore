@@ -33,14 +33,12 @@ public class BackendTest {
                 "author@mail.com", "Auther","Rost");
         Publisher testPublisher = new Publisher("publisher@mail.com",
                 "Union Publisher", address);
-        ArrayList<BookEntity> bookEntities = new ArrayList<>();
-        bookEntities.add(testAuthor);
-        bookEntities.add(testPublisher);
         //===========================================================
         Book testBook = BookController.createBook("1234_12345_123456",
                 new Description(BookType.EBOOK, "Test Book", Year.now(), "360"),
                 new Measurement(20.5, 11,200),
-                bookEntities,
+                testAuthor,
+                testPublisher,
                 249);
         //===========================================================
     // Second backend test -> passed

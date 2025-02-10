@@ -46,16 +46,16 @@ public class DataSearchTest {
 
         // Books
         List<Book> books = List.of(
-                BookController.createBook("ISBN001", new Description(BookType.PAPERBACK, "Book 1 Desc", Year.now(), "500"), new Measurement(10, 20, 2), new ArrayList<>(List.of(author1, publisher1)), 19.99),
-                BookController.createBook("ISBN002", new Description(BookType.HARDCOVER, "Book 2 Desc", Year.now(), "600"), new Measurement(12, 22, 3), new ArrayList<>(List.of(author2, publisher2)), 24.99),
-                BookController.createBook("ISBN003", new Description(BookType.EBOOK, "Book 3 Desc", Year.now(), "300"), new Measurement(11, 21, 2.5), new ArrayList<>(List.of(author3, publisher3)), 29.99),
-                BookController.createBook("ISBN004", new Description(BookType.PAPERBACK, "Book 4 Desc", Year.now(), "450"), new Measurement(13, 23, 3.2), new ArrayList<>(List.of(author4, publisher4)), 15.99),
-                BookController.createBook("ISBN005", new Description(BookType.HARDCOVER, "Book 5 Desc", Year.now(), "700"), new Measurement(9, 19, 1.8), new ArrayList<>(List.of(author5, publisher5)), 22.99),
-                BookController.createBook("ISBN006", new Description(BookType.EBOOK, "Book 6 Desc", Year.now(), "350"), new Measurement(10, 18, 2.2), new ArrayList<>(List.of(author1, publisher2)), 18.99),
-                BookController.createBook("ISBN007", new Description(BookType.PAPERBACK, "Book 7 Desc", Year.now(), "550"), new Measurement(11, 20, 2.6), new ArrayList<>(List.of(author2, publisher3)), 27.99),
-                BookController.createBook("ISBN008", new Description(BookType.HARDCOVER, "Book 8 Desc", Year.now(), "800"), new Measurement(12, 24, 3.4), new ArrayList<>(List.of(author3, publisher4)), 31.99),
-                BookController.createBook("ISBN009", new Description(BookType.EBOOK, "Book 9 Desc", Year.now(), "400"), new Measurement(13, 22, 3.1), new ArrayList<>(List.of(author4, publisher5)), 26.99),
-                BookController.createBook("ISBN010", new Description(BookType.PAPERBACK, "Book 10 Desc", Year.now(), "480"), new Measurement(14, 25, 3.6), new ArrayList<>(List.of(author5, publisher1)), 35.99)
+                BookController.createBook("ISBN001", new Description(BookType.PAPERBACK, "Book 1 Desc", Year.now(), "500"), new Measurement(10, 20, 2), author1, publisher1, 19.99),
+                BookController.createBook("ISBN002", new Description(BookType.HARDCOVER, "Book 2 Desc", Year.now(), "600"), new Measurement(12, 22, 3), author2, publisher2, 24.99),
+                BookController.createBook("ISBN003", new Description(BookType.EBOOK, "Book 3 Desc", Year.now(), "300"), new Measurement(11, 21, 2.5), author3, publisher3, 29.99),
+                BookController.createBook("ISBN004", new Description(BookType.PAPERBACK, "Book 4 Desc", Year.now(), "450"), new Measurement(13, 23, 3.2), author4, publisher4, 15.99),
+                BookController.createBook("ISBN005", new Description(BookType.HARDCOVER, "Book 5 Desc", Year.now(), "700"), new Measurement(9, 19, 1.8), author5, publisher5, 22.99),
+                BookController.createBook("ISBN006", new Description(BookType.EBOOK, "Book 6 Desc", Year.now(), "350"), new Measurement(10, 18, 2.2), author1, publisher2, 18.99),
+                BookController.createBook("ISBN007", new Description(BookType.PAPERBACK, "Book 7 Desc", Year.now(), "550"), new Measurement(11, 20, 2.6), author2, publisher3, 27.99),
+                BookController.createBook("ISBN008", new Description(BookType.HARDCOVER, "Book 8 Desc", Year.now(), "800"), new Measurement(12, 24, 3.4), author3, publisher4, 31.99),
+                BookController.createBook("ISBN009", new Description(BookType.EBOOK, "Book 9 Desc", Year.now(), "400"), new Measurement(13, 22, 3.1), author4, publisher5, 26.99),
+                BookController.createBook("ISBN010", new Description(BookType.PAPERBACK, "Book 10 Desc", Year.now(), "480"), new Measurement(14, 25, 3.6), author5, publisher1, 35.99)
         );
 
         // Customers
@@ -72,9 +72,11 @@ public class DataSearchTest {
                 CustomerController.createCustomer("Jack", "Gray", LocalDate.of(1986, 4, 12), "jack@example.com", "8899001122", addresses.get(4), "password10")
         );
         //==============================================================================================
-    // Dataset test 1 - passed
+    // Dataset test 1 - not passed
         BookSearch bookSearch = new BookSearch("Penguin Books");
         ArrayList<Book> searchResult = bookSearch.getSearchResult();
-        System.out.println(searchResult);
+        for(Book foundBook : searchResult){
+            System.out.println(foundBook.toString());
+        }
     }
 }

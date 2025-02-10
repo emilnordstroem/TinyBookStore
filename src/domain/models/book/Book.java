@@ -6,45 +6,33 @@ import domain.models.book.interfaces.Rateable;
 import domain.models.book.interfaces.Searchable;
 import domain.models.customer.Rating;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Book implements Rateable, Purchasable, Searchable<String> {
     private String isbn;
     private Description description;
     private Measurement measurement;
-    private final ArrayList<BookEntity> bookEntities = new ArrayList<>();
+    private final Author author;
+    private final Publisher publisher;
     private final ArrayList<Rating> ratings = new ArrayList<>();
     private Boolean isRecommended;
     private double price;
 
     public Book(String isbn, Description description,
-                Measurement measurement, ArrayList<BookEntity> bookEntities, double price) {
+                Measurement measurement, Author author, Publisher publisher, double price) {
         this.isbn = isbn;
         this.description = description;
         this.measurement = measurement;
-        addBookEntity(bookEntities);
+        this.author = author;
+        this.publisher = publisher;
         this.isRecommended = false; // New books will not be placed as recommended
         this.price = price;
     }
 
-    public void addBookEntity(ArrayList<BookEntity> entities) {
-        for(BookEntity entity : entities){
-            bookEntities.add(entity);
-            if(entity instanceof Publisher){
-                ((Publisher) entity).addBook(this);
-            } else if (entity instanceof Author){
-                ((Author) entity).addBook(this);
-            }
-        }
-    }
 
     public void removeBookFromEntities(){
-        for(BookEntity entity : bookEntities){
-            if(entity instanceof Author){
-                ((Author) entity).removeBook(this);
-            } else if (entity instanceof Publisher){
-                ((Publisher) entity).removeBook(this);
-            }
-        }
+        author.removeBook(this);
+        publisher.removeBook(this);
     }
 
     @Override
@@ -89,8 +77,19 @@ public class Book implements Rateable, Purchasable, Searchable<String> {
         }
     }
 
-    public ArrayList<BookEntity> getBookEntities() {
-        return new ArrayList<>(bookEntities);
+    public Author getAuthor() {
+        return author;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    @Override
+    public boolean matches(String search) {
+        return description.getTitle().toLowerCase().contains(search)
+                || author.matches(search)
+                || publisher.matches(search);
     }
 
     @Override
@@ -100,5 +99,10 @@ public class Book implements Rateable, Purchasable, Searchable<String> {
 
     public Description getDescription() {
         return description;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("%s", description.getTitle());
     }
 }

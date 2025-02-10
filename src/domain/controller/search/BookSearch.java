@@ -6,14 +6,23 @@ import storage.BookStorage;
 import java.util.ArrayList;
 
 public class BookSearch {
-    ArrayList<Book> datasetArrayList;
-    ArrayList<Book> searchResult;
+    private final ArrayList<Book> dataset = BookStorage.getBookArrayList();
+    ArrayList<Book> searchResult = new ArrayList<>();
 
     public BookSearch(String searchKeyword) {
-        this.datasetArrayList = BookStorage.getBookArrayList();
-//        SortAlgorithm<Book> sortedDataSet = new SortAlgorithm<>(datasetArrayList);
-        SearchAlgorithm<Book> searchResult = new SearchAlgorithm<>(searchKeyword);
-        this.searchResult = searchResult.getSearchResult();
+        this.searchResult = searchAlgorithm(searchKeyword);
+    }
+
+    private ArrayList<Book> searchAlgorithm(String searchKeyword){
+        ArrayList<Book> matchingBooks = new ArrayList<>();
+
+        for(Book book : dataset){
+            if(book.matches(searchKeyword.toLowerCase())){
+                matchingBooks.add(book);
+            }
+        }
+
+        return matchingBooks;
     }
 
     public ArrayList<Book> getSearchResult() {

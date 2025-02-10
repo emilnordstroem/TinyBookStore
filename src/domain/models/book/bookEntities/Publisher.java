@@ -44,6 +44,11 @@ public class Publisher extends BookEntity{
     }
 
     @Override
+    public boolean matches(String search) {
+        return title.toLowerCase().contains(search);
+    }
+
+    @Override
     public int compareTo(String searchTerm) {
         return title.compareTo(searchTerm);
     }
