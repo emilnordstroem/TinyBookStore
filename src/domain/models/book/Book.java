@@ -87,9 +87,9 @@ public class Book implements Rateable, Purchasable, Searchable<String> {
 
     @Override
     public boolean matches(String search) {
-        return description.getTitle().toLowerCase().contains(search)
-                || author.matches(search)
-                || publisher.matches(search);
+        return description.getTitle().toLowerCase().contains(search.toLowerCase())
+                || author.matches(search.toLowerCase())
+                || publisher.matches(search.toLowerCase());
     }
 
     @Override

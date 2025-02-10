@@ -3,29 +3,15 @@ package domain.controller.search;
 import domain.models.book.Book;
 import storage.BookStorage;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ForkJoinPool;
 
 public class BookSearch {
-    private final ArrayList<Book> dataset = BookStorage.getBookArrayList();
-    ArrayList<Book> searchResult = new ArrayList<>();
+    private final ForkJoinPool pool = new ForkJoinPool();
+    private final List<Book> books = BookStorage.getBookArrayList();
 
-    public BookSearch(String searchKeyword) {
-        this.searchResult = searchAlgorithm(searchKeyword);
-    }
-
-    private ArrayList<Book> searchAlgorithm(String searchKeyword){
-        ArrayList<Book> matchingBooks = new ArrayList<>();
-
-        for(Book book : dataset){
-            if(book.matches(searchKeyword.toLowerCase())){
-                matchingBooks.add(book);
-            }
-        }
-
-        return matchingBooks;
-    }
-
-    public ArrayList<Book> getSearchResult() {
-        return searchResult;
+    public List<Book> search(String searchKeyword){
+        ParallelSearch bookSearch = new ParallelSearch(books, searchKeyword);
+        return pool.invoke(bookSearch);
     }
 }
