@@ -1,7 +1,6 @@
 package domain.controller.backendTests;
 
 import domain.controller.search.BookSearch;
-import domain.controller.search.ParallelSearch;
 import domain.controller.useCases.BookController;
 import domain.controller.useCases.CustomerController;
 import domain.models.address.Address;
@@ -14,7 +13,6 @@ import domain.models.book.bookEntities.Description;
 import domain.models.book.bookEntities.Measurement;
 import domain.models.book.bookEntities.Publisher;
 import domain.models.customer.Customer;
-import storage.BookStorage;
 
 import java.time.LocalDate;
 import java.time.Year;
@@ -91,11 +89,10 @@ public class DataSearchTest {
         /* Guide to understand performances: first digit [followed by number of digits]
             First performance: 8-9[6]ns -> linear search
             Second performance: 2-4[6]ns -> Parallel search
+            Third performance:  1-2[6]ns -> Parallel search (recursion)
          */
-        BookSearch search = new BookSearch();
-
         long start = System.nanoTime();
-        List<Book> searchResult = search.search("Book 28 Desc");
+        List<Book> searchResult = new BookSearch().search("Book 6 Desc");
         long end = System.nanoTime();
         System.out.println(end - start);
         for(Book foundBook : searchResult){
