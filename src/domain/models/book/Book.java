@@ -85,6 +85,14 @@ public class Book implements Rateable, Purchasable, Searchable<String> {
         return publisher;
     }
 
+    public int isRecommended() {
+        if(isRecommended){
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     @Override
     public boolean matches(String search) {
         return description.getTitle().toLowerCase().contains(search.toLowerCase())
@@ -99,6 +107,15 @@ public class Book implements Rateable, Purchasable, Searchable<String> {
 
     public Description getDescription() {
         return description;
+    }
+
+    public Measurement getMeasurement() {
+        return measurement;
+    }
+
+
+    public String getIsbn() {
+        return isbn;
     }
 
     @Override

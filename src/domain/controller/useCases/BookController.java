@@ -25,6 +25,7 @@ public class BookController {
 
         Book newBook = new Book(isbn, description, measurement, author, publisher, price);
         BookStorage.addBook(newBook);
+        BookStorage.addBookToDatabase(newBook);
         return newBook;
     }
 
