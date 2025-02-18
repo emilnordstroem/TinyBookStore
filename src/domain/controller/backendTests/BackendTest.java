@@ -32,7 +32,7 @@ public class BackendTest {
         Author testAuthor = BookController.createAuthor(
                 "author@mail.com", "Auther","Rost");
         Publisher testPublisher = new Publisher("publisher@mail.com",
-                "Union Publisher", address);
+                "Union Publisher");
         //===========================================================
         Book testBook = BookController.createBook("1234_12345_123456",
                 new Description(BookType.EBOOK, "Test Book", Year.now(), "360"),

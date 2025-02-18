@@ -6,7 +6,7 @@ import storage.BookStorage;
 import java.util.List;
 
 public class BookSearch {
-    private final List<Book> books = BookStorage.getBookArrayList();
+    private final List<Book> books = BookStorage.getAllBooksFromDatabase();
 
     public List<Book> search(String searchKeyword){
         RecursiveSearch<Book> bookSearch = new RecursiveSearch<>(searchKeyword, books);

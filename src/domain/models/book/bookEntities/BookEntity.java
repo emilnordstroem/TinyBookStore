@@ -6,14 +6,23 @@ import domain.models.book.interfaces.Searchable;
 import java.util.ArrayList;
 
 public abstract class BookEntity implements Searchable<String>{
-    protected static long id = 1_000_001;
+    protected static long idCounter = 1_000_001;
+    protected long id;
     protected String email;
     protected ArrayList<Book> books;
 
     public BookEntity(String email) {
-        id += 1;
+        id = idCounter++;
         this.email = email;
         this.books = new ArrayList<>();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     abstract void addBook(Book book);

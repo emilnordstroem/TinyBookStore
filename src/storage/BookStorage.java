@@ -1,11 +1,14 @@
 package storage;
 
 import domain.models.book.Book;
+import domain.models.book.BookType;
+import domain.models.book.bookEntities.Author;
+import domain.models.book.bookEntities.Description;
+import domain.models.book.bookEntities.Measurement;
+import domain.models.book.bookEntities.Publisher;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.Year;
 import java.util.ArrayList;
 
 public class BookStorage {
@@ -54,18 +57,71 @@ public class BookStorage {
             throw new RuntimeException(e);
         }
     }
+
+    public static ArrayList<Book> getAllBooksFromDatabase(){
+        ArrayList<Book> booksList = new ArrayList<>();
+        try{
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
+            );
+
+            String sqlStatement = """
+                    SELECT B.isbn, B.book_type, B.book_title, B.book_publication_year, B.book_pages, B.book_height, B.book_width, B.book_weight, B.price,\s
+                    A.firstName, A.lastName,
+                    BEE.email,
+                    P.title
+                    FROM Book B
+                    JOIN Book_Entities BE\s
+                    \tON B.isbn = BE.bookId\s
+                    \t\tJOIN Book_Entity BEE\s
+                    \t\t\tON BE.entityId = BEE.entityId\s
+                    \t\t\t\tLEFT JOIN Author A\s
+                    \t\t\t\t\tON BEE.entityId = A.entityId\s
+                    \t\t\t\t\t\tLEFT JOIN Publisher P\s
+                    \t\t\t\t\t\t\tON BEE.entityId = P.entityId""";
+
+            PreparedStatement retrieveBooksStatement = connection.prepareStatement(
+                    sqlStatement,
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE
+            );
+
+            ResultSet retrieveBooksResultSet = retrieveBooksStatement.executeQuery();
+
+            while(retrieveBooksResultSet.next()){
+                String isbn = retrieveBooksResultSet.getString("isbn");
+                Description description = new Description(
+                        BookType.valueOf(retrieveBooksResultSet.getString("book_type")),
+                        retrieveBooksResultSet.getString("book_title"),
+                        Year.of(Integer.parseInt(retrieveBooksResultSet.getString("book_publication_year"))),
+                        retrieveBooksResultSet.getString("book_pages")
+                );
+                Measurement measurement = new Measurement(
+                        retrieveBooksResultSet.getDouble("book_height"),
+                        retrieveBooksResultSet.getDouble("book_width"),
+                        retrieveBooksResultSet.getDouble("book_weight")
+                );
+                Author author = new Author(
+                        retrieveBooksResultSet.getString("email"),
+                        retrieveBooksResultSet.getString("firstName"),
+                        retrieveBooksResultSet.getString("lastName")
+                );
+                Publisher publisher = new Publisher(
+                        retrieveBooksResultSet.getString("email"),
+                        retrieveBooksResultSet.getString("title")
+                );
+                boolean isRecommended = false;
+                double price = retrieveBooksResultSet.getDouble("price");
+
+                booksList.add(new Book(isbn, description, measurement, author, publisher, price));
+            }
+        } catch (SQLException e) {
+            System.out.println("BookStorage.java -> getAllBooksFromDatabase()");
+            e.getMessage();
+        }
+        for(Book book : booksList){
+            System.out.println(book.getIsbn());
+        }
+        return booksList;
+    }
 }
-/*
-CREATE TABLE Book (
-	isbn CHAR(13) PRIMARY KEY,
-	book_type VARCHAR(9) CHECK (book_type IN ('HARDCOVER', 'PAPERBACK', 'EBOOK')),
-	book_title VARCHAR(50) NOT NULL,
-	book_publication_year CHAR(4) NOT NULL,
-	book_pages VARCHAR(5) NOT NULL,
-	book_height DECIMAL(5,2) CHECK (book_height >= 0) DEFAULT 0,
-    book_width DECIMAL(5,2) CHECK (book_width >= 0) DEFAULT 0,
-    book_weight INT CHECK (book_weight >= 0) DEFAULT 0,
-	is_recommended BIT NOT NULL CHECK (is_recommended IN (0, 1)) DEFAULT 0,
-	price DECIMAL(6,2) NOT NULL CHECK (price >= 0)
-)
- */

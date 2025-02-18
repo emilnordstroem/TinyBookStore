@@ -22,6 +22,10 @@ public class Author extends BookEntity{
         return lastName;
     }
 
+    public String getEmail(){
+        return super.email;
+    }
+
     public String getFullName(){
         return String.format("%s %s",
                 firstName,

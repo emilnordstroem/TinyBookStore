@@ -7,22 +7,18 @@ import java.util.ArrayList;
 
 public class Publisher extends BookEntity{
     private final String title;
-    private Address address;
 
-    public Publisher(String email, String title, Address address) {
+    public Publisher(String email, String title) {
         super(email);
         this.title = title;
-        this.address = address;
-    }
-
-    public void changeAddress(Address address){
-        if(!this.address.equals(address)){
-            this.address = address;
-        }
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public String getEmail(){
+        return super.email;
     }
 
     @Override

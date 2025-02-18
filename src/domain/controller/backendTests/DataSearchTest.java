@@ -39,13 +39,13 @@ public class DataSearchTest {
         Author author6 = BookController.createAuthor("author6@example.com", "Diana", "Evans");
         Author author7 = BookController.createAuthor("author7@example.com", "Ethan", "Fisher");
 
-        Publisher publisher1 = BookController.createPublisher("publisher1@example.com", "Penguin Books", addresses.get(0));
-        Publisher publisher2 = BookController.createPublisher("publisher2@example.com", "HarperCollins", addresses.get(1));
-        Publisher publisher3 = BookController.createPublisher("publisher3@example.com", "Simon & Schuster", addresses.get(2));
-        Publisher publisher4 = BookController.createPublisher("publisher4@example.com", "Macmillan", addresses.get(3));
-        Publisher publisher5 = BookController.createPublisher("publisher5@example.com", "Hachette", addresses.get(4));
-        Publisher publisher6 = BookController.createPublisher("publisher6@example.com", "Random House", addresses.get(0));
-        Publisher publisher7 = BookController.createPublisher("publisher7@example.com", "Bloomsbury", addresses.get(1));
+        Publisher publisher1 = BookController.createPublisher("publisher1@example.com", "Penguin Books");
+        Publisher publisher2 = BookController.createPublisher("publisher2@example.com", "HarperCollins");
+        Publisher publisher3 = BookController.createPublisher("publisher3@example.com", "Simon & Schuster");
+        Publisher publisher4 = BookController.createPublisher("publisher4@example.com", "Macmillan");
+        Publisher publisher5 = BookController.createPublisher("publisher5@example.com", "Hachette");
+        Publisher publisher6 = BookController.createPublisher("publisher6@example.com", "Random House");
+        Publisher publisher7 = BookController.createPublisher("publisher7@example.com", "Bloomsbury");
 
         // Books
         List<Book> books = List.of(
