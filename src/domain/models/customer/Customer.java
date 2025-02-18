@@ -4,7 +4,7 @@ import domain.models.address.Address;
 import domain.models.book.Book;
 import domain.models.cart.Cart;
 import domain.models.order.Order;
-import storage.RatingStorage;
+import storage.toBeTerminated.RatingStorage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

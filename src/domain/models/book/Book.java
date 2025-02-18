@@ -6,33 +6,35 @@ import domain.models.book.interfaces.Rateable;
 import domain.models.book.interfaces.Searchable;
 import domain.models.customer.Rating;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class Book implements Rateable, Purchasable, Searchable<String> {
-    private String isbn;
-    private Description description;
-    private Measurement measurement;
-    private final Author author;
+    private final String isbn;
+    private final Description description;
+    private final Measurement measurement;
+    private final List<Author> authors;
     private final Publisher publisher;
     private final ArrayList<Rating> ratings = new ArrayList<>();
     private Boolean isRecommended;
     private double price;
 
     public Book(String isbn, Description description,
-                Measurement measurement, Author author, Publisher publisher, double price) {
+                Measurement measurement, List<Author> authors, Publisher publisher, double price) {
         this.isbn = isbn;
         this.description = description;
         this.measurement = measurement;
-        this.author = author;
+        this.authors = authors;
         this.publisher = publisher;
         this.isRecommended = false; // New books will not be placed as recommended
         this.price = price;
     }
 
-
     public void removeBookFromEntities(){
-        author.removeBook(this);
         publisher.removeBook(this);
+        for(Author author : authors){
+            author.removeBook(this);
+        }
     }
 
     @Override
@@ -77,14 +79,6 @@ public class Book implements Rateable, Purchasable, Searchable<String> {
         }
     }
 
-    public Author getAuthor() {
-        return author;
-    }
-
-    public Publisher getPublisher() {
-        return publisher;
-    }
-
     public int isRecommended() {
         if(isRecommended){
             return 1;
@@ -95,14 +89,19 @@ public class Book implements Rateable, Purchasable, Searchable<String> {
 
     @Override
     public boolean matches(String search) {
-        return description.getTitle().toLowerCase().contains(search.toLowerCase())
-                || author.matches(search.toLowerCase())
-                || publisher.matches(search.toLowerCase());
+        String lowerCaseSearch = search.toLowerCase();
+        return description.getTitle().toLowerCase().contains(lowerCaseSearch)
+                || authors.stream().anyMatch(a -> a.matches(lowerCaseSearch))
+                || publisher.matches(lowerCaseSearch);
     }
 
     @Override
-    public int compareTo(String searchTerm) {
-        return description.getTitle().compareToIgnoreCase(searchTerm);
+    public String toString(){
+        return String.format("%s", description.getTitle());
+    }
+
+    public String getIsbn() {
+        return isbn;
     }
 
     public Description getDescription() {
@@ -113,13 +112,31 @@ public class Book implements Rateable, Purchasable, Searchable<String> {
         return measurement;
     }
 
-
-    public String getIsbn() {
-        return isbn;
+    public List<Author> getAuthors() {
+        return new ArrayList<>(authors);
     }
 
-    @Override
-    public String toString(){
-        return String.format("%s", description.getTitle());
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public ArrayList<Rating> getRatings() {
+        return new ArrayList<>(ratings);
+    }
+
+    public Boolean getRecommended() {
+        return isRecommended;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setRecommended(Boolean recommended) {
+        isRecommended = recommended;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

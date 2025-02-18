@@ -1,6 +1,5 @@
 package domain.models.book.bookEntities;
 
-import domain.models.address.Address;
 import domain.models.book.Book;
 
 import java.util.ArrayList;
@@ -15,10 +14,6 @@ public class Publisher extends BookEntity{
 
     public String getTitle() {
         return title;
-    }
-
-    public String getEmail(){
-        return super.email;
     }
 
     @Override
@@ -41,10 +36,5 @@ public class Publisher extends BookEntity{
     @Override
     public boolean matches(String search) {
         return title.toLowerCase().contains(search);
-    }
-
-    @Override
-    public int compareTo(String searchTerm) {
-        return title.compareTo(searchTerm);
     }
 }

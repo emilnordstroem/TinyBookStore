@@ -4,7 +4,7 @@ import domain.models.address.Address;
 import domain.models.book.Book;
 import domain.models.customer.Customer;
 import domain.models.order.Order;
-import storage.CustomerStorage;
+import storage.toBeTerminated.CustomerStorage;
 
 import java.time.LocalDate;
 

@@ -2,7 +2,7 @@ package domain.controller.useCases;
 
 import domain.models.customer.Customer;
 import domain.models.order.Order;
-import storage.OrderStorage;
+import storage.toBeTerminated.OrderStorage;
 
 public class OrderController {
     public static Order createOrder(Customer customer){

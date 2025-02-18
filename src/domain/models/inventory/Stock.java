@@ -1,7 +1,7 @@
 package domain.models.inventory;
 
 import domain.models.book.Book;
-import storage.StockStorage;
+import storage.toBeTerminated.StockStorage;
 
 public class Stock implements StockManageable{
     private int quantity;

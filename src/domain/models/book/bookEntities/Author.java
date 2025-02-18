@@ -22,10 +22,6 @@ public class Author extends BookEntity{
         return lastName;
     }
 
-    public String getEmail(){
-        return super.email;
-    }
-
     public String getFullName(){
         return String.format("%s %s",
                 firstName,
@@ -54,10 +50,5 @@ public class Author extends BookEntity{
         return firstName.toLowerCase().contains(search)
                 || lastName.toLowerCase().contains(search)
                 || getFullName().toLowerCase().contains(search);
-    }
-
-    @Override
-    public int compareTo(String searchTerm) {
-        return lastName.compareTo(searchTerm);
     }
 }

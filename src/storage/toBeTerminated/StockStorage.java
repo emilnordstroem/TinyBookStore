@@ -1,4 +1,4 @@
-package storage;
+package storage.toBeTerminated;
 
 import domain.models.inventory.Stock;
 

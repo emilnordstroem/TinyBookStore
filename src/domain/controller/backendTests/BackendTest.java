@@ -7,6 +7,7 @@ import domain.controller.useCases.OrderController;
 import domain.models.address.Apartment;
 import domain.models.book.Book;
 import domain.models.book.BookType;
+import domain.models.book.Genre;
 import domain.models.book.bookEntities.*;
 import domain.models.customer.Customer;
 import domain.models.customer.Rating;
@@ -16,6 +17,7 @@ import domain.models.order.OrderStatus;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BackendTest {
     public static void main(String[] args) {

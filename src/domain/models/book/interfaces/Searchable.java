@@ -1,8 +1,7 @@
 package domain.models.book.interfaces;
 
-import domain.models.book.Book;
-
-public interface Searchable <T> extends Comparable<T>{
+@FunctionalInterface
+public interface Searchable <T>{
 
     /**
      * @param search
@@ -11,8 +10,4 @@ public interface Searchable <T> extends Comparable<T>{
      * true if argument passed is found
      */
     boolean matches(T search);
-
-
-    @Override
-    int compareTo(T object);
 }

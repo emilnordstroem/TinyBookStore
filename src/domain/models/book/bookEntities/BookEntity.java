@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public abstract class BookEntity implements Searchable<String>{
     protected static long idCounter = 1_000_001;
-    protected long id;
+    protected final long id;
     protected String email;
     protected ArrayList<Book> books;
 

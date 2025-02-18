@@ -2,7 +2,7 @@ package domain.controller.useCases;
 
 import domain.models.book.Book;
 import domain.models.inventory.Stock;
-import storage.StockStorage;
+import storage.toBeTerminated.StockStorage;
 
 public class InventoryController {
     public static Stock createStock(Book book, int quantity){
